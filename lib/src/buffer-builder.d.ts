@@ -1,7 +1,7 @@
 // TODO(nweiz): Use the type package once DefinitelyTyped/DefinitelyTyped#50228
 // lands.
 
-declare module "buffer-builder" {
+declare module 'buffer-builder' {
   class BufferBuilder {
     constructor(initialCapacity?: number | Buffer);
     appendBuffer(source: Buffer): BufferBuilder;
@@ -23,7 +23,12 @@ declare module "buffer-builder" {
     appendStringZero(str: string, encoding?: string): BufferBuilder;
     appendFill(value: number, count: number): BufferBuilder;
     get(): Buffer;
-    copy(targetBuffer: Buffer, targetStart?: number, sourceStart?: number, sourceEnd?: number): number;
+    copy(
+      targetBuffer: Buffer,
+      targetStart?: number,
+      sourceStart?: number,
+      sourceEnd?: number
+    ): number;
     readonly length: number;
   }
 

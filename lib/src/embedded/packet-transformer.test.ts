@@ -136,17 +136,12 @@ describe('packet transformer', () => {
           done
         );
 
-        rawBuffers$.next(
-          Buffer.from([4, 1, 2, 3, 4, 2, 101, 102])
-        );
+        rawBuffers$.next(Buffer.from([4, 1, 2, 3, 4, 2, 101, 102]));
         rawBuffers$.complete();
       });
 
       it('decodes multiple chunks', async done => {
-        expectDecoding(
-          [Buffer.from([1, 2, 3, 4]), Buffer.alloc(300, 1)],
-          done
-        );
+        expectDecoding([Buffer.from([1, 2, 3, 4]), Buffer.alloc(300, 1)], done);
 
         rawBuffers$.next(Buffer.from([4]));
         rawBuffers$.next(Buffer.from([1, 2, 3, 4, 172]));
@@ -155,10 +150,7 @@ describe('packet transformer', () => {
       });
 
       it('decodes one chunk per byte', async done => {
-        expectDecoding(
-          [Buffer.from([1, 2, 3, 4]), Buffer.alloc(300, 1)],
-          done
-        );
+        expectDecoding([Buffer.from([1, 2, 3, 4]), Buffer.alloc(300, 1)], done);
 
         for (const byte of [4, 1, 2, 3, 4, 172, 2, ...Buffer.alloc(300, 1)]) {
           rawBuffers$.next(Buffer.from([byte]));

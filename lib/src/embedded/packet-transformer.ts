@@ -2,8 +2,7 @@
 // MIT-style license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-/// <reference path="../buffer-builder.d.ts" />
-
+import '../buffer-builder';
 import {Observable, Subject} from 'rxjs';
 import {mergeMap} from 'rxjs/operators';
 import BufferBuilder = require('buffer-builder');
@@ -64,7 +63,7 @@ export class PacketTransformer {
         // The highest-order bit indicates whether more bytes are necessary to
         // fully express the number. The lower 7 bits indicate the number's
         // value.
-        header.appendUInt8((length > 0x7f ? 0x80 : 0)|(length & 0x7f));
+        header.appendUInt8((length > 0x7f ? 0x80 : 0) | (length & 0x7f));
         length >>= 7;
       }
 
@@ -144,7 +143,7 @@ class Packet {
     //   [payloadOffset] to reach [payloadLength] bytes in it so this packet is
     //   complete.
     if (!this.payload) {
-      while (true) {
+      for (;;) {
         const byte = source[i];
 
         // Varints encode data in the 7 lower bits of each byte, which we access
@@ -175,9 +174,11 @@ class Packet {
     // to try to copy more than the payload can hold (if the source has another
     // message after the current one) or more than the source has available (if
     // the current message is split across multiple chunks).
-    const bytesToWrite =
-      Math.min(this.payload.length - this.payloadOffset, source.length - i);
-    this.payload.set(source.subarray(i, i + bytesToWrite), this.payloadOffset);;
+    const bytesToWrite = Math.min(
+      this.payload.length - this.payloadOffset,
+      source.length - i
+    );
+    this.payload.set(source.subarray(i, i + bytesToWrite), this.payloadOffset);
     this.payloadOffset += bytesToWrite;
 
     return i + bytesToWrite;
