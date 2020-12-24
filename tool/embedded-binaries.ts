@@ -4,7 +4,8 @@
 
 import * as p from 'path';
 import {promises as fs, existsSync} from 'fs';
-import fetch, {RequestInit} from 'node-fetch';
+import fetch from 'node-fetch';
+import {githubFetch} from './github-fetch';
 import {extract as extractTar} from 'tar';
 import extractZip = require('extract-zip');
 import * as shell from 'shelljs';
@@ -141,28 +142,15 @@ async function downloadDartSassEmbedded(
   // https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#get-the-latest-release
   console.log('Getting Dart Sass Embedded release info.');
   try {
-    const fetchOptions: RequestInit = {
-      redirect: 'follow',
-    };
-    if (process.env.TRAVIS === 'true' && process.env.GITHUB_AUTH) {
-      fetchOptions['headers'] = {
-        Authorization:
-          'Basic ' +
-          Buffer.from(`sassbot:${process.env.GITHUB_AUTH}`).toString('base64'),
-      };
-    }
-
     if (version) {
-      const response = await fetch(
-        'https://api.github.com/repos/sass/dart-sass-embedded/releases/tags/${version}',
-        fetchOptions
+      const response = await githubFetch(
+        'https://api.github.com/repos/sass/dart-sass-embedded/releases/tags/${version}'
       );
       if (!response.ok) throw Error(response.statusText);
       latestRelease = JSON.parse(await response.text());
     } else {
-      const response = await fetch(
-        'https://api.github.com/repos/sass/dart-sass-embedded/releases',
-        fetchOptions
+      const response = await githubFetch(
+        'https://api.github.com/repos/sass/dart-sass-embedded/releases'
       );
       if (!response.ok) throw Error(response.statusText);
       latestRelease = JSON.parse(await response.text())[0];

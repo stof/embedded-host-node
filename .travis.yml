@@ -6,7 +6,7 @@ branches:
 language: node_js
 
 env:
-- EMBEDDED_HOST_REF=master
+- EMBEDDED_HOST_VERSION=master
 
 node_js:
 - node
@@ -22,7 +22,7 @@ cache: npm
 
 install:
 - npm install
-- npm run init -- --embedded-host-version="$EMBEDDED_HOST_REF"
+- npm run init
 
 script:
 - npm test
