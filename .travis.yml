@@ -3,15 +3,12 @@ branches:
   only:
   - master
 
-language: node_js
+language: dart
 
 env:
-- EMBEDDED_HOST_VERSION=master
-
-node_js:
-- node
-- lts/fermium
-- lts/erbium
+- NODE_VERSION=node
+- NODE_VERSION=lts/fermium
+- NODE_VERSION=lts/erbium
 
 os:
 - linux
@@ -21,6 +18,8 @@ os:
 cache: npm
 
 install:
+- nvm install $NODE_VERSIOn
+- nvm use $NODE_VERSIOn
 - npm install
 - npm run init
 
