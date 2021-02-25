@@ -1,0 +1,9 @@
+The npm postinstall hook provides no good way to differentiate a developer who
+runs `npm install` to develop the `embedded-host-node` package, versus a user
+who runs `npm install` to get `embedded-host-node` from npm.
+
+This file simply exists to distinguish the two environments. When
+`embedded-host-node` is published to npm, this file is not contained within the
+distributed tarball.
+
+See: `./install.js`

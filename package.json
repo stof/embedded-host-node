@@ -1,6 +1,8 @@
 {
   "name": "sass-embedded",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-beta.1",
+  "embedded-protocol-version": "^1.0.0-beta.8",
+  "dart-sass-embedded-version": "^1.0.0-beta.7",
   "description": "Node.js library that communicates with Embedded Dart Sass using the Embedded Sass protocol",
   "repository": "sass/embedded-host-node",
   "author": "Google Inc.",
@@ -8,17 +10,19 @@
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
   "files": [
-    "dist/**/*"
+    "dist/**/*",
+    "install.js"
   ],
   "engines": {
     "node": ">=12.18.2"
   },
   "scripts": {
     "check": "gts check",
-    "compile": "tsc",
     "fix": "gts fix",
     "init": "ts-node ./tool/init.ts",
-    "test": "ts-node ./node_modules/jasmine/bin/jasmine"
+    "test": "ts-node ./node_modules/jasmine/bin/jasmine",
+    "compile": "tsc",
+    "postinstall": "node ./install.js"
   },
   "dependencies": {
     "buffer-builder": "^0.2.0",
@@ -27,6 +31,7 @@
     "immutable": "^4.0.0-rc.12",
     "rxjs": "^6.5.5",
     "semver": "^5.7.1",
+    "shelljs": "^0.8.4",
     "tar": "^6.0.5"
   },
   "devDependencies": {
@@ -44,7 +49,6 @@
     "jasmine-spec-reporter": "^5.0.2",
     "node-fetch": "^2.6.0",
     "protoc": "^1.0.4",
-    "shelljs": "^0.8.4",
     "source-map": "^0.6.1",
     "ts-node": "^8.10.2",
     "ts-protoc-gen": "^0.12.0",
